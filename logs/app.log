@@ -245,3 +245,7 @@ AttributeError: 'ComputerGeneratorGUI' object has no attribute 'run'
 2025-03-30 21:47:17,084 - CustomDataManager - INFO - Inicializando gestor de datos personalizado
 2025-03-30 23:19:17,378 - CustomDataManager - INFO - Inicializando gestor de datos personalizado
 2025-03-30 23:59:57,774 - CustomDataManager - INFO - Inicializando gestor de datos personalizado
+2025-03-31 00:05:52,240 - ComputerGenerator - INFO - Application starting
+2025-03-31 00:05:52,357 - CustomDataManager - INFO - Inicializando gestor de datos personalizado
+2025-03-31 00:05:52,497 - CustomDataManager - INFO - Inicializando gestor de datos personalizado
+2025-03-31 00:05:56,456 - CustomDataManager - INFO - Inicializando gestor de datos personalizado

@@ -1,0 +1,195 @@
+# component_browser_tab.py
+import tkinter as tk
+from tkinter import ttk
+import customtkinter as ctk
+
+# Define todas las funciones primero, antes de usarlas
+def search_components(gui):
+    # Función simple para búsqueda
+    gui.status_bar.config(text="Función de búsqueda (implementación pendiente)")
+
+def apply_price_filter(gui):
+    # Función simple para filtrar por precio
+    gui.status_bar.config(text="Filtro de precio (implementación pendiente)")
+
+def apply_brand_filter(gui):
+    # Función simple para filtrar por marca
+    gui.status_bar.config(text="Filtro de marca (implementación pendiente)")
+    
+def reset_component_filters(gui):
+    # Función simple para restablecer filtros
+    gui.status_bar.config(text="Filtros restablecidos (implementación pendiente)")
+
+def update_specific_filters(gui, component_type):
+    # Función simple para actualizar filtros específicos
+    pass
+
+def update_brand_filter_list(gui, component_type, components):
+    # Función simple para actualizar lista de marcas
+    pass
+
+def apply_specific_filters(gui):
+    # Función simple para aplicar filtros específicos
+    gui.status_bar.config(text="Filtros específicos aplicados (implementación pendiente)")
+
+def view_component_details(gui):
+    # Función simple para ver detalles
+    gui.status_bar.config(text="Ver detalles (implementación pendiente)")
+
+def add_component_to_build(gui):
+    # Función simple para añadir a la construcción
+    gui.status_bar.config(text="Componente añadido (implementación pendiente)")
+
+def compare_with_current(gui):
+    # Función simple para comparar
+    gui.status_bar.config(text="Comparación (implementación pendiente)")
+
+def replace_from_comparison(gui, dialog, component_type, values):
+    # Función simple para reemplazar desde comparación
+    pass
+
+def show_component_context_menu(gui, event):
+    # Función simple para mostrar menú contextual
+    pass
+
+def get_component_browser_data(gui, component_type):
+    # Devolver datos de ejemplo
+    return [
+        {"name": "Componente 1", "details": "Detalles 1", "performance": "90/100", "price": "$100"},
+        {"name": "Componente 2", "details": "Detalles 2", "performance": "80/100", "price": "$200"},
+        {"name": "Componente 3", "details": "Detalles 3", "performance": "70/100", "price": "$300"}
+    ]
+
+def update_component_browser(gui, event=None):
+    # Función simple para actualizar el navegador
+    component_type = gui.component_type_var.get()
+    gui.status_bar.config(text=f"Navegador actualizado con {component_type}")
+
+def setup_component_browser_tab(gui):
+    """Set up the component browser tab for exploring available components"""
+    # Create the tab
+    browser_frame = ttk.Frame(gui.notebook)
+    gui.notebook.add(browser_frame, text=" Component Browser ")
+    
+    # Configure the grid
+    browser_frame.grid_columnconfigure(1, weight=1)
+    browser_frame.grid_rowconfigure(1, weight=1)
+    
+    # Top controls frame
+    controls_frame = ttk.Frame(browser_frame)
+    controls_frame.grid(row=0, column=0, columnspan=2, sticky="ew", padx=10, pady=10)
+    
+    ttk.Label(controls_frame, text="Component Browser", font=("TkDefaultFont", 14, "bold")).pack(side=tk.LEFT, padx=10, pady=5)
+    
+    # Component type selection
+    ttk.Label(controls_frame, text="Component Type:").pack(side=tk.LEFT, padx=10, pady=5)
+    gui.component_type_var = tk.StringVar(value="cpu")
+    component_types = ["cpu", "gpu", "ram", "storage", "motherboard", "psu", "cooling", "case"]
+    component_type_dropdown = ttk.Combobox(controls_frame, textvariable=gui.component_type_var, 
+                                         values=component_types, width=12,
+                                         state="readonly")
+    component_type_dropdown.pack(side=tk.LEFT, padx=5, pady=5)
+    
+    # Search bar
+    ttk.Label(controls_frame, text="Search:").pack(side=tk.LEFT, padx=10, pady=5)
+    gui.search_var = tk.StringVar()
+    search_entry = ttk.Entry(controls_frame, textvariable=gui.search_var, width=20)
+    search_entry.pack(side=tk.LEFT, padx=5, pady=5)
+    
+    search_button = ctk.CTkButton(controls_frame, text="Search", command=lambda: search_components(gui))
+    search_button.pack(side=tk.LEFT, padx=5, pady=5)
+    
+    # Reset filters button
+    reset_button = ctk.CTkButton(controls_frame, text="Reset Filters", command=lambda: reset_component_filters(gui))
+    reset_button.pack(side=tk.RIGHT, padx=5, pady=5)
+    
+    # Left pane - filters
+    filters_frame = ttk.LabelFrame(browser_frame, text="Filters")
+    filters_frame.grid(row=1, column=0, sticky="ns", padx=10, pady=10)
+    
+    # Price range filter
+    ttk.Label(filters_frame, text="Price Range:").grid(row=0, column=0, sticky="w", padx=10, pady=5)
+    
+    price_filter_frame = ttk.Frame(filters_frame)
+    price_filter_frame.grid(row=1, column=0, sticky="w", padx=10, pady=5)
+    
+    ttk.Label(price_filter_frame, text="Min:").grid(row=0, column=0, sticky="w")
+    gui.price_filter_min_var = tk.StringVar(value="0")
+    price_filter_min_entry = ttk.Entry(price_filter_frame, textvariable=gui.price_filter_min_var, width=8)
+    price_filter_min_entry.grid(row=0, column=1, sticky="w", padx=5, pady=2)
+    
+    ttk.Label(price_filter_frame, text="Max:").grid(row=0, column=2, sticky="w")
+    gui.price_filter_max_var = tk.StringVar(value="50000")
+    price_filter_max_entry = ttk.Entry(price_filter_frame, textvariable=gui.price_filter_max_var, width=8)
+    price_filter_max_entry.grid(row=0, column=3, sticky="w", padx=5, pady=2)
+    
+    # Apply price filter button
+    apply_price_button = ctk.CTkButton(price_filter_frame, text="Apply", command=lambda: apply_price_filter(gui))
+    apply_price_button.grid(row=0, column=4, padx=5, pady=2)
+    
+    # Brand filter
+    ttk.Label(filters_frame, text="Brand:").grid(row=2, column=0, sticky="w", padx=10, pady=5)
+    
+    gui.brand_filter_var = tk.StringVar(value="All")
+    gui.brand_filter_list = ttk.Combobox(filters_frame, textvariable=gui.brand_filter_var, values=["All"], width=15)
+    gui.brand_filter_list.grid(row=3, column=0, sticky="w", padx=10, pady=2)
+    gui.brand_filter_list.bind("<<ComboboxSelected>>", lambda e: apply_brand_filter(gui))
+    
+    # Component-specific filters frame
+    gui.specific_filters_frame = ttk.LabelFrame(filters_frame, text="Specific Filters")
+    gui.specific_filters_frame.grid(row=4, column=0, sticky="ew", padx=5, pady=10)
+    
+    # Right pane - component list
+    list_frame = ttk.Frame(browser_frame)
+    list_frame.grid(row=1, column=1, sticky="nsew", padx=10, pady=10)
+    
+    # Component list with details
+    columns = ('name', 'details', 'performance', 'price')
+    gui.components_browser = ttk.Treeview(list_frame, columns=columns, show='headings', height=20)
+    
+    # Define headings and columns
+    gui.components_browser.heading('name', text='Name')
+    gui.components_browser.heading('details', text='Details')
+    gui.components_browser.heading('performance', text='Performance')
+    gui.components_browser.heading('price', text='Price')
+    
+    gui.components_browser.column('name', width=200, anchor='w')
+    gui.components_browser.column('details', width=300, anchor='w')
+    gui.components_browser.column('performance', width=100, anchor='center')
+    gui.components_browser.column('price', width=100, anchor='e')
+    
+    # Scrollbars
+    vscrollbar = ttk.Scrollbar(list_frame, orient=tk.VERTICAL, command=gui.components_browser.yview)
+    hscrollbar = ttk.Scrollbar(list_frame, orient=tk.HORIZONTAL, command=gui.components_browser.xview)
+    gui.components_browser.configure(yscroll=vscrollbar.set, xscroll=hscrollbar.set)
+    
+    # Pack components
+    gui.components_browser.grid(row=0, column=0, sticky="nsew")
+    vscrollbar.grid(row=0, column=1, sticky="ns")
+    hscrollbar.grid(row=1, column=0, sticky="ew")
+    
+    # Configure grid weights
+    list_frame.grid_columnconfigure(0, weight=1)
+    list_frame.grid_rowconfigure(0, weight=1)
+    
+    # Create context menu (right-click menu) for component browser
+    gui.component_context_menu = tk.Menu(gui.components_browser, tearoff=0)
+    gui.component_context_menu.add_command(label="View Details", command=lambda: view_component_details(gui))
+    gui.component_context_menu.add_command(label="Add to Current Build", command=lambda: add_component_to_build(gui))
+    gui.component_context_menu.add_command(label="Compare with Current", command=lambda: compare_with_current(gui))
+    
+    # Asignar funciones al objeto gui
+    gui.search_components = search_components
+    gui.apply_price_filter = apply_price_filter
+    gui.apply_brand_filter = apply_brand_filter
+    gui.reset_component_filters = reset_component_filters
+    gui.update_specific_filters = update_specific_filters
+    gui.update_brand_filter_list = update_brand_filter_list
+    gui.apply_specific_filters = apply_specific_filters
+    gui.view_component_details = view_component_details
+    gui.add_component_to_build = add_component_to_build
+    gui.compare_with_current = compare_with_current
+    gui.replace_from_comparison = replace_from_comparison
+    gui.show_component_context_menu = show_component_context_menu
+    gui.get_component_browser_data = get_component_browser_data
+    gui.update_component_browser = update_component_browser
