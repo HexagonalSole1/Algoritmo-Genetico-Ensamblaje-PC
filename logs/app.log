@@ -60,3 +60,188 @@ AttributeError: 'ComputerGeneratorGUI' object has no attribute 'run'
 2025-03-30 19:46:01,726 - CustomDataManager - INFO - Inicializando gestor de datos personalizado
 2025-03-30 19:46:11,492 - ComputerGenerator - INFO - Application closing
 2025-03-30 19:55:55,328 - ComputerGenerator - INFO - Application closing
+2025-03-30 20:59:21,974 - ComputerGenerator - INFO - Application starting
+2025-03-30 20:59:22,116 - CustomDataManager - INFO - Inicializando gestor de datos personalizado
+2025-03-30 20:59:22,254 - CustomDataManager - INFO - Inicializando gestor de datos personalizado
+2025-03-30 21:00:20,764 - ComputerGenerator - INFO - Application starting
+2025-03-30 21:00:20,889 - CustomDataManager - INFO - Inicializando gestor de datos personalizado
+2025-03-30 21:00:21,029 - CustomDataManager - INFO - Inicializando gestor de datos personalizado
+2025-03-30 21:01:26,900 - ComputerGenerator - INFO - Application starting
+2025-03-30 21:01:27,014 - CustomDataManager - INFO - Inicializando gestor de datos personalizado
+2025-03-30 21:01:27,151 - CustomDataManager - INFO - Inicializando gestor de datos personalizado
+2025-03-30 21:01:32,925 - CustomDataManager - INFO - Inicializando gestor de datos personalizado
+2025-03-30 21:01:40,955 - CustomDataManager - INFO - Inicializando gestor de datos personalizado
+2025-03-30 21:21:27,108 - ComputerGenerator - INFO - Application starting
+2025-03-30 21:21:27,224 - CustomDataManager - INFO - Inicializando gestor de datos personalizado
+2025-03-30 21:21:27,363 - CustomDataManager - INFO - Inicializando gestor de datos personalizado
+2025-03-30 21:21:35,931 - ComputerGenerator - INFO - Starting genetic algorithm with population size 50
+2025-03-30 21:21:35,932 - ComputerGenerator - INFO - User preferences: {'min_price': 8000, 'max_price': 15000, 'usage': 'juegos', 'priority': 'balanced', 'brand_preferences': {}, 'form_factor': 'ATX', 'aesthetic': {'rgb': False, 'color': 'Black'}, 'must_include': {}, 'must_exclude': {}, 'future_proof': False}
+2025-03-30 21:21:35,932 - ComputerGenerator - INFO - Generating initial population...
+2025-03-30 21:21:35,933 - ComputerGenerator - INFO - Initial population created with 50 individuals
+2025-03-30 21:21:35,933 - ComputerGenerator - INFO - Generation 1/100
+2025-03-30 21:21:35,934 - ComputerGenerator - INFO - Mutation rate adjusted to 0.0500 based on diversity of 0.7871
+2025-03-30 21:21:35,939 - ComputerGenerator - INFO - Best fitness: 68.96, Avg fitness: 57.82
+2025-03-30 21:21:35,939 - ComputerGenerator - INFO - Generation 2/100
+2025-03-30 21:21:35,939 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.6060
+2025-03-30 21:21:35,944 - ComputerGenerator - INFO - Best fitness: 75.17, Avg fitness: 61.56
+2025-03-30 21:21:35,944 - ComputerGenerator - INFO - Generation 3/100
+2025-03-30 21:21:35,944 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.5563
+2025-03-30 21:21:35,948 - ComputerGenerator - INFO - Best fitness: 75.17, Avg fitness: 59.91
+2025-03-30 21:21:35,948 - ComputerGenerator - INFO - Generation 4/100
+2025-03-30 21:21:35,949 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.5371
+2025-03-30 21:21:35,952 - ComputerGenerator - INFO - Best fitness: 75.17, Avg fitness: 61.60
+2025-03-30 21:21:35,952 - ComputerGenerator - INFO - Generation 5/100
+2025-03-30 21:21:35,952 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.5099
+2025-03-30 21:21:35,956 - ComputerGenerator - INFO - Best fitness: 75.79, Avg fitness: 63.53
+2025-03-30 21:21:35,956 - ComputerGenerator - INFO - Generation 6/100
+2025-03-30 21:21:35,956 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.4514
+2025-03-30 21:21:35,959 - ComputerGenerator - INFO - Best fitness: 85.08, Avg fitness: 65.00
+2025-03-30 21:21:35,960 - ComputerGenerator - INFO - Generation 7/100
+2025-03-30 21:21:35,960 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.4908
+2025-03-30 21:21:35,963 - ComputerGenerator - INFO - Best fitness: 85.08, Avg fitness: 65.87
+2025-03-30 21:21:35,963 - ComputerGenerator - INFO - Generation 8/100
+2025-03-30 21:21:35,963 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.5028
+2025-03-30 21:21:35,966 - ComputerGenerator - INFO - Best fitness: 85.08, Avg fitness: 68.54
+2025-03-30 21:21:35,966 - ComputerGenerator - INFO - Generation 9/100
+2025-03-30 21:21:35,966 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.4329
+2025-03-30 21:21:35,969 - ComputerGenerator - INFO - Best fitness: 85.08, Avg fitness: 71.61
+2025-03-30 21:21:35,969 - ComputerGenerator - INFO - Generation 10/100
+2025-03-30 21:21:35,969 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.4209
+2025-03-30 21:21:35,972 - ComputerGenerator - INFO - Best fitness: 86.47, Avg fitness: 73.29
+2025-03-30 21:21:35,972 - ComputerGenerator - INFO - Generation 11/100
+2025-03-30 21:21:35,972 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.4065
+2025-03-30 21:21:35,975 - ComputerGenerator - INFO - Best fitness: 86.47, Avg fitness: 71.86
+2025-03-30 21:21:35,975 - ComputerGenerator - INFO - Generation 12/100
+2025-03-30 21:21:35,975 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.4512
+2025-03-30 21:21:35,977 - ComputerGenerator - INFO - Best fitness: 88.60, Avg fitness: 71.69
+2025-03-30 21:21:35,977 - ComputerGenerator - INFO - Generation 13/100
+2025-03-30 21:21:35,978 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.5029
+2025-03-30 21:21:35,980 - ComputerGenerator - INFO - Best fitness: 88.68, Avg fitness: 75.38
+2025-03-30 21:21:35,980 - ComputerGenerator - INFO - Generation 14/100
+2025-03-30 21:21:35,981 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.4365
+2025-03-30 21:21:35,983 - ComputerGenerator - INFO - Best fitness: 88.68, Avg fitness: 78.13
+2025-03-30 21:21:35,983 - ComputerGenerator - INFO - Generation 15/100
+2025-03-30 21:21:35,983 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.3945
+2025-03-30 21:21:35,986 - ComputerGenerator - INFO - Best fitness: 90.86, Avg fitness: 80.63
+2025-03-30 21:21:35,986 - ComputerGenerator - INFO - Generation 16/100
+2025-03-30 21:21:35,986 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.4233
+2025-03-30 21:21:35,988 - ComputerGenerator - INFO - Best fitness: 90.86, Avg fitness: 82.35
+2025-03-30 21:21:35,988 - ComputerGenerator - INFO - Generation 17/100
+2025-03-30 21:21:35,988 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.3593
+2025-03-30 21:21:35,991 - ComputerGenerator - INFO - Best fitness: 91.40, Avg fitness: 80.79
+2025-03-30 21:21:35,991 - ComputerGenerator - INFO - Generation 18/100
+2025-03-30 21:21:35,991 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.3975
+2025-03-30 21:21:35,993 - ComputerGenerator - INFO - Best fitness: 92.35, Avg fitness: 80.56
+2025-03-30 21:21:35,993 - ComputerGenerator - INFO - Generation 19/100
+2025-03-30 21:21:35,993 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.4188
+2025-03-30 21:21:35,996 - ComputerGenerator - INFO - Best fitness: 92.41, Avg fitness: 82.92
+2025-03-30 21:21:35,996 - ComputerGenerator - INFO - Generation 20/100
+2025-03-30 21:21:35,996 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.3617
+2025-03-30 21:21:35,998 - ComputerGenerator - INFO - Best fitness: 92.41, Avg fitness: 84.93
+2025-03-30 21:21:35,998 - ComputerGenerator - INFO - Generation 21/100
+2025-03-30 21:21:35,998 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.3116
+2025-03-30 21:21:36,001 - ComputerGenerator - INFO - Best fitness: 92.41, Avg fitness: 84.01
+2025-03-30 21:21:36,001 - ComputerGenerator - INFO - Generation 22/100
+2025-03-30 21:21:36,001 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.3059
+2025-03-30 21:21:36,003 - ComputerGenerator - INFO - Best fitness: 92.41, Avg fitness: 85.40
+2025-03-30 21:21:36,003 - ComputerGenerator - INFO - Generation 23/100
+2025-03-30 21:21:36,003 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.3697
+2025-03-30 21:21:36,006 - ComputerGenerator - INFO - Best fitness: 92.53, Avg fitness: 85.63
+2025-03-30 21:21:36,006 - ComputerGenerator - INFO - Generation 24/100
+2025-03-30 21:21:36,006 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.3481
+2025-03-30 21:21:36,008 - ComputerGenerator - INFO - Best fitness: 92.53, Avg fitness: 87.08
+2025-03-30 21:21:36,008 - ComputerGenerator - INFO - Generation 25/100
+2025-03-30 21:21:36,008 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.3866
+2025-03-30 21:21:36,010 - ComputerGenerator - INFO - Best fitness: 92.53, Avg fitness: 88.11
+2025-03-30 21:21:36,010 - ComputerGenerator - INFO - Generation 26/100
+2025-03-30 21:21:36,010 - ComputerGenerator - INFO - Mutation rate adjusted to 0.2000 based on diversity of 0.2592
+2025-03-30 21:21:36,012 - ComputerGenerator - INFO - Best fitness: 92.53, Avg fitness: 81.86
+2025-03-30 21:21:36,013 - ComputerGenerator - INFO - Generation 27/100
+2025-03-30 21:21:36,013 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.4105
+2025-03-30 21:21:36,015 - ComputerGenerator - INFO - Best fitness: 92.53, Avg fitness: 81.23
+2025-03-30 21:21:36,015 - ComputerGenerator - INFO - Generation 28/100
+2025-03-30 21:21:36,015 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.4094
+2025-03-30 21:21:36,017 - ComputerGenerator - INFO - Best fitness: 92.53, Avg fitness: 84.80
+2025-03-30 21:21:36,017 - ComputerGenerator - INFO - Generation 29/100
+2025-03-30 21:21:36,017 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.4025
+2025-03-30 21:21:36,019 - ComputerGenerator - INFO - Best fitness: 92.53, Avg fitness: 87.33
+2025-03-30 21:21:36,019 - ComputerGenerator - INFO - Generation 30/100
+2025-03-30 21:21:36,019 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.3327
+2025-03-30 21:21:36,021 - ComputerGenerator - INFO - Best fitness: 92.53, Avg fitness: 88.37
+2025-03-30 21:21:36,022 - ComputerGenerator - INFO - Generation 31/100
+2025-03-30 21:21:36,022 - ComputerGenerator - INFO - Mutation rate adjusted to 0.2000 based on diversity of 0.2406
+2025-03-30 21:21:36,024 - ComputerGenerator - INFO - Best fitness: 92.53, Avg fitness: 82.25
+2025-03-30 21:21:36,024 - ComputerGenerator - INFO - Generation 32/100
+2025-03-30 21:21:36,024 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.3807
+2025-03-30 21:21:36,026 - ComputerGenerator - INFO - Best fitness: 92.53, Avg fitness: 81.79
+2025-03-30 21:21:36,026 - ComputerGenerator - INFO - Generation 33/100
+2025-03-30 21:21:36,026 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.4134
+2025-03-30 21:21:36,028 - ComputerGenerator - INFO - Best fitness: 92.53, Avg fitness: 84.09
+2025-03-30 21:21:36,028 - ComputerGenerator - INFO - Generation 34/100
+2025-03-30 21:21:36,028 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.3628
+2025-03-30 21:21:36,030 - ComputerGenerator - INFO - Best fitness: 92.55, Avg fitness: 87.35
+2025-03-30 21:21:36,030 - ComputerGenerator - INFO - Generation 35/100
+2025-03-30 21:21:36,030 - ComputerGenerator - INFO - Mutation rate adjusted to 0.2000 based on diversity of 0.2538
+2025-03-30 21:21:36,033 - ComputerGenerator - INFO - Best fitness: 92.55, Avg fitness: 79.16
+2025-03-30 21:21:36,033 - ComputerGenerator - INFO - Generation 36/100
+2025-03-30 21:21:36,033 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.4697
+2025-03-30 21:21:36,035 - ComputerGenerator - INFO - Best fitness: 92.55, Avg fitness: 81.83
+2025-03-30 21:21:36,035 - ComputerGenerator - INFO - Generation 37/100
+2025-03-30 21:21:36,035 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.3223
+2025-03-30 21:21:36,037 - ComputerGenerator - INFO - Best fitness: 92.55, Avg fitness: 82.36
+2025-03-30 21:21:36,037 - ComputerGenerator - INFO - Generation 38/100
+2025-03-30 21:21:36,037 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.3465
+2025-03-30 21:21:36,039 - ComputerGenerator - INFO - Best fitness: 92.55, Avg fitness: 85.63
+2025-03-30 21:21:36,039 - ComputerGenerator - INFO - Generation 39/100
+2025-03-30 21:21:36,039 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.3829
+2025-03-30 21:21:36,041 - ComputerGenerator - INFO - Best fitness: 92.55, Avg fitness: 86.60
+2025-03-30 21:21:36,041 - ComputerGenerator - INFO - Generation 40/100
+2025-03-30 21:21:36,041 - ComputerGenerator - INFO - Mutation rate adjusted to 0.2000 based on diversity of 0.2874
+2025-03-30 21:21:36,044 - ComputerGenerator - INFO - Best fitness: 92.55, Avg fitness: 83.48
+2025-03-30 21:21:36,044 - ComputerGenerator - INFO - Generation 41/100
+2025-03-30 21:21:36,044 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.4054
+2025-03-30 21:21:36,046 - ComputerGenerator - INFO - Best fitness: 92.55, Avg fitness: 83.21
+2025-03-30 21:21:36,046 - ComputerGenerator - INFO - Generation 42/100
+2025-03-30 21:21:36,046 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.3412
+2025-03-30 21:21:36,048 - ComputerGenerator - INFO - Best fitness: 92.55, Avg fitness: 85.94
+2025-03-30 21:21:36,048 - ComputerGenerator - INFO - Generation 43/100
+2025-03-30 21:21:36,048 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.3037
+2025-03-30 21:21:36,050 - ComputerGenerator - INFO - Best fitness: 92.55, Avg fitness: 87.09
+2025-03-30 21:21:36,050 - ComputerGenerator - INFO - Generation 44/100
+2025-03-30 21:21:36,050 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.3119
+2025-03-30 21:21:36,052 - ComputerGenerator - INFO - Best fitness: 92.55, Avg fitness: 84.75
+2025-03-30 21:21:36,052 - ComputerGenerator - INFO - Generation 45/100
+2025-03-30 21:21:36,052 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.3156
+2025-03-30 21:21:36,054 - ComputerGenerator - INFO - Best fitness: 92.55, Avg fitness: 85.71
+2025-03-30 21:21:36,054 - ComputerGenerator - INFO - Generation 46/100
+2025-03-30 21:21:36,054 - ComputerGenerator - INFO - Mutation rate adjusted to 0.2000 based on diversity of 0.2600
+2025-03-30 21:21:36,057 - ComputerGenerator - INFO - Best fitness: 92.55, Avg fitness: 79.98
+2025-03-30 21:21:36,057 - ComputerGenerator - INFO - Generation 47/100
+2025-03-30 21:21:36,057 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.4159
+2025-03-30 21:21:36,058 - ComputerGenerator - INFO - Best fitness: 92.55, Avg fitness: 83.42
+2025-03-30 21:21:36,059 - ComputerGenerator - INFO - Generation 48/100
+2025-03-30 21:21:36,059 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.3927
+2025-03-30 21:21:36,060 - ComputerGenerator - INFO - Best fitness: 92.55, Avg fitness: 86.66
+2025-03-30 21:21:36,061 - ComputerGenerator - INFO - Generation 49/100
+2025-03-30 21:21:36,061 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.3222
+2025-03-30 21:21:36,063 - ComputerGenerator - INFO - Best fitness: 92.55, Avg fitness: 83.50
+2025-03-30 21:21:36,063 - ComputerGenerator - INFO - Generation 50/100
+2025-03-30 21:21:36,063 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.3293
+2025-03-30 21:21:36,065 - ComputerGenerator - INFO - Best fitness: 92.55, Avg fitness: 85.11
+2025-03-30 21:21:36,065 - ComputerGenerator - INFO - Generation 51/100
+2025-03-30 21:21:36,065 - ComputerGenerator - INFO - Mutation rate adjusted to 0.2000 based on diversity of 0.2951
+2025-03-30 21:21:36,067 - ComputerGenerator - INFO - Best fitness: 92.55, Avg fitness: 81.49
+2025-03-30 21:21:36,067 - ComputerGenerator - INFO - Generation 52/100
+2025-03-30 21:21:36,067 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.3719
+2025-03-30 21:21:36,069 - ComputerGenerator - INFO - Best fitness: 92.55, Avg fitness: 82.57
+2025-03-30 21:21:36,069 - ComputerGenerator - INFO - Generation 53/100
+2025-03-30 21:21:36,069 - ComputerGenerator - INFO - Mutation rate adjusted to 0.1000 based on diversity of 0.3619
+2025-03-30 21:21:36,071 - ComputerGenerator - INFO - Best fitness: 92.55, Avg fitness: 84.83
+2025-03-30 21:21:36,071 - ComputerGenerator - INFO - Early stopping: Convergence detected
+2025-03-30 21:21:36,072 - ComputerGenerator - INFO - Genetic algorithm completed in 0.14 seconds
+2025-03-30 21:21:36,072 - ComputerGenerator - INFO - Best computer fitness: 92.55
+2025-03-30 21:21:42,690 - CustomDataManager - INFO - Inicializando gestor de datos personalizado
+2025-03-30 21:44:36,441 - CustomDataManager - INFO - Inicializando gestor de datos personalizado
+2025-03-30 21:47:17,084 - CustomDataManager - INFO - Inicializando gestor de datos personalizado
+2025-03-30 23:19:17,378 - CustomDataManager - INFO - Inicializando gestor de datos personalizado
+2025-03-30 23:59:57,774 - CustomDataManager - INFO - Inicializando gestor de datos personalizado
