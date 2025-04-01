@@ -63,7 +63,9 @@ def setup_generator_tab(gui):
     usage_frame = ttk.Frame(requirements_frame)
     usage_frame.grid(row=1, column=1, columnspan=3, sticky="w", padx=10, pady=5)
     
-    # Primero asegúrate de que esta función esté definida ANTES de usarla
+        # In generator_tab.py, fix the radiobutton command handling:
+        # First, change the update_usage_selection function:
+    # Primero definimos la función de actualización de uso
     def update_usage_selection(gui):
         """Manejar el cambio en la selección de uso"""
         usage = gui.usage_var.get()
@@ -74,76 +76,77 @@ def setup_generator_tab(gui):
             gui.on_usage_changed()
         
         # Actualizar las aplicaciones disponibles
-        gui.update_applications(gui)
+        update_applications(gui)  # Llama a la función directamente, no como método
 
-    # Ahora crear los radiobuttons con una función lambda que funcione correctamente
-    # La clave es no capturar la variable key en el bucle usando un parámetro por defecto
+    # Luego creamos los radiobuttons con captura correcta de la clave
     for i, (key, value) in enumerate(gui.computer_usages.items()):
         col = i % 4
         row = i // 4 + 1
         ttk.Radiobutton(usage_frame, text=value, variable=gui.usage_var, value=key,
-                        command=lambda: update_usage_selection(gui)).grid(row=row, column=col, sticky="w", padx=10, pady=2)
-        # Añadir un evento para actualizar las aplicaciones disponibles
-       
-        # Rango de precio
+                    command=lambda k=key: update_usage_selection(gui)).grid(row=row, column=col, sticky="w", padx=10, pady=2)
+
+    # Aplicación específica (en su propia fila en requirements_frame)
+    ttk.Label(requirements_frame, text="Aplicación específica:").grid(row=2, column=0, sticky="w", padx=10, pady=5)
+    gui.application_var = tk.StringVar(value="Ninguna")
+    gui.application_dropdown = ttk.Combobox(requirements_frame, textvariable=gui.application_var, 
+                                        values=["Ninguna"], width=20, state="readonly")
+    gui.application_dropdown.grid(row=2, column=1, columnspan=2, sticky="w", padx=10, pady=5)
+
+    gui.app_info_button = ctk.CTkButton(requirements_frame, text="Ver Requisitos", 
+                                    command=lambda: show_application_requirements(gui),
+                                    width=20)
+    gui.app_info_button.grid(row=2, column=3, padx=5, pady=5)
+
+    # Rango de precio (ahora en fila 3)
     ttk.Label(requirements_frame, text="Price Range:").grid(row=3, column=0, sticky="w", padx=10, pady=5)
     price_frame = ttk.Frame(requirements_frame)
     price_frame.grid(row=3, column=1, columnspan=3, sticky="w", padx=10, pady=5)
-    
+
     ttk.Label(price_frame, text="Min:").grid(row=0, column=0, sticky="w")
     gui.price_min_var = tk.StringVar(value="8000")
     gui.price_min_entry = ttk.Entry(price_frame, textvariable=gui.price_min_var, width=10)
     gui.price_min_entry.grid(row=0, column=1, sticky="w", padx=5, pady=5)
-    
+
     ttk.Label(price_frame, text="Max:").grid(row=0, column=2, sticky="w")
     gui.price_max_var = tk.StringVar(value="15000")
     gui.price_max_entry = ttk.Entry(price_frame, textvariable=gui.price_max_var, width=10)
     gui.price_max_entry.grid(row=0, column=3, sticky="w", padx=5, pady=5)
-    
+
     # Slider de precio
     gui.price_range_slider = ctk.CTkSlider(requirements_frame, from_=0, to=50000,
-                                           number_of_steps=50, width=400)
+                                        number_of_steps=50, width=400)
     gui.price_range_slider.grid(row=3, column=4, columnspan=4, sticky="ew", padx=10, pady=5)
     gui.price_range_slider.set(15000)  # Valor por defecto
-    
-    # Aplicación objetivo
-    ttk.Label(usage_frame, text="Aplicación específica:").grid(row=2, column=0, sticky="w", padx=10, pady=5)
-    gui.application_var = tk.StringVar(value="Ninguna")
-    gui.application_dropdown = ttk.Combobox(usage_frame, textvariable=gui.application_var, 
-                                        values=["Ninguna"], width=20, state="readonly")
-    gui.application_dropdown.grid(row=2, column=1, columnspan=3, sticky="w", padx=10, pady=5)
 
-    # Añadir un infobox que muestre los requisitos recomendados
-    gui.app_info_button = ctk.CTkButton(usage_frame, text="Ver Requisitos", 
-                                    command=lambda: show_application_requirements(gui),
-                                    width=20)
-    gui.app_info_button.grid(row=2, column=4, padx=5, pady=5)
-    # Selección de prioridad
+    # Selección de prioridad (ahora en fila 4)
     ttk.Label(requirements_frame, text="Priority:").grid(row=4, column=0, sticky="w", padx=10, pady=5)
     gui.priority_var = tk.StringVar(value="balanced")
     priority_frame = ttk.Frame(requirements_frame)
     priority_frame.grid(row=4, column=1, columnspan=3, sticky="w", padx=10, pady=5)
-    
+
     ttk.Radiobutton(priority_frame, text="Performance", variable=gui.priority_var, value="performance").grid(row=0, column=0, sticky="w", padx=10)
     ttk.Radiobutton(priority_frame, text="Value", variable=gui.priority_var, value="value").grid(row=0, column=1, sticky="w", padx=10)
     ttk.Radiobutton(priority_frame, text="Balanced", variable=gui.priority_var, value="balanced").grid(row=0, column=2, sticky="w", padx=10)
-    
-    # Factor de forma
+
+    # Factor de forma (ahora en fila 5)
     ttk.Label(requirements_frame, text="Form Factor:").grid(row=5, column=0, sticky="w", padx=10, pady=5)
     gui.form_factor_var = tk.StringVar(value="ATX")
     form_factor_frame = ttk.Frame(requirements_frame)
     form_factor_frame.grid(row=5, column=1, columnspan=3, sticky="w", padx=10, pady=5)
-    
+
     ttk.Radiobutton(form_factor_frame, text="ATX", variable=gui.form_factor_var, value="ATX").grid(row=0, column=0, sticky="w", padx=10)
     ttk.Radiobutton(form_factor_frame, text="Micro-ATX", variable=gui.form_factor_var, value="Micro-ATX").grid(row=0, column=1, sticky="w", padx=10)
     ttk.Radiobutton(form_factor_frame, text="Mini-ITX", variable=gui.form_factor_var, value="Mini-ITX").grid(row=0, column=2, sticky="w", padx=10)
-    
-    # Future-proofing
+
+    # Future-proofing (ahora en fila 6)
     gui.future_proof_var = tk.BooleanVar(value=False)
     future_proof_check = ttk.Checkbutton(requirements_frame, text="Prioritize Future-Proofing", 
                                         variable=gui.future_proof_var)
-    future_proof_check.grid(row=5, column=4, sticky="w", padx=10, pady=5)
-    
+    future_proof_check.grid(row=6, column=0, columnspan=2, sticky="w", padx=10, pady=5)
+
+    # Al final de la función setup_generator_tab agregamos esta línea
+    gui.update_applications = update_applications
+        
     # 2. Sección de Parámetros del Algoritmo
     algo_frame = ctk.CTkFrame(generator_frame)
     algo_frame.grid(row=1, column=0, columnspan=12, sticky="ew", padx=10, pady=10)
