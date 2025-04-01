@@ -762,6 +762,7 @@ class Computer:
             "estimated_performance": self.estimated_performance
         }
 
+# Actualizar la clase UserPreferences en models.py
 
 class UserPreferences:
     """Enhanced UserPreferences model with more detailed options"""
@@ -776,7 +777,9 @@ class UserPreferences:
         aesthetic: Dict[str, Any] = None,  # Aesthetic preferences
         must_include: Dict[str, Any] = None,  # Components that must be included
         must_exclude: Dict[str, Any] = None,  # Components that must be excluded
-        future_proof: bool = False      # Prioritize future-proofing
+        future_proof: bool = False,      # Prioritize future-proofing
+        target_application: str = None,  # Target application (e.g., "fortnite")
+        application_category: str = None  # Category of the application (e.g., "juegos")
     ) -> None:
         self.min_price: int = min_price
         self.max_price: int = max_price
@@ -788,12 +791,15 @@ class UserPreferences:
         self.must_include: Dict[str, Any] = must_include or {}
         self.must_exclude: Dict[str, Any] = must_exclude or {}
         self.future_proof: bool = future_proof
+        self.target_application: str = target_application
+        self.application_category: str = application_category
 
     def __str__(self) -> str:
+        app_info = f", Aplicación: {self.target_application}" if self.target_application else ""
         return (
             f"User Preferences:\n"
             f"  Price Range: ${self.min_price} - ${self.max_price}\n"
-            f"  Primary Usage: {self.usage}\n"
+            f"  Primary Usage: {self.usage}{app_info}\n"
             f"  Priority: {self.priority}\n"
             f"  Form Factor: {self.form_factor}\n"
             f"  Future-proof: {'Yes' if self.future_proof else 'No'}"
@@ -811,5 +817,7 @@ class UserPreferences:
             "aesthetic": self.aesthetic,
             "must_include": self.must_include,
             "must_exclude": self.must_exclude,
-            "future_proof": self.future_proof
+            "future_proof": self.future_proof,
+            "target_application": self.target_application,
+            "application_category": self.application_category
         }

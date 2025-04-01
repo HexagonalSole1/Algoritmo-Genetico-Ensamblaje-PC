@@ -2,6 +2,35 @@
 import tkinter as tk
 from tkinter import ttk
 import customtkinter as ctk
+from tkinter import messagebox
+
+# Si también estás teniendo problemas con scrolledtext, añade:
+from tkinter import scrolledtext
+from application_data import get_applications_for_category
+
+# Añadir este código de prueba al inicio de gui/tabs/generator_tab.py
+# después de las importaciones para verificar que el archivo puede importarse
+
+try:
+    from application_data import get_applications_for_category
+    print("✅ application_data.py importado correctamente")
+    
+    # Probar si funciona
+    test_apps = get_applications_for_category("juegos")
+    print(f"Aplicaciones de juegos encontradas: {test_apps}")
+except ImportError as e:
+    print(f"❌ Error al importar application_data.py: {e}")
+    
+    # Intentar importar desde diferentes rutas
+    try:
+        import sys
+        import os
+        # Añadir la raíz del proyecto al path
+        sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+        from application_data import get_applications_for_category
+        print("✅ application_data.py importado después de ajustar path")
+    except ImportError as e2:
+        print(f"❌ Aún no se puede importar: {e2}")
 
 def setup_generator_tab(gui):
     generator_frame = ttk.Frame(gui.notebook)
@@ -34,13 +63,29 @@ def setup_generator_tab(gui):
     usage_frame = ttk.Frame(requirements_frame)
     usage_frame.grid(row=1, column=1, columnspan=3, sticky="w", padx=10, pady=5)
     
+    # Primero asegúrate de que esta función esté definida ANTES de usarla
+    def update_usage_selection(gui):
+        """Manejar el cambio en la selección de uso"""
+        usage = gui.usage_var.get()
+        print(f"Selección de uso cambiada a: {usage}")
+        
+        # Llamar a la función existente on_usage_changed si existe
+        if hasattr(gui, 'on_usage_changed'):
+            gui.on_usage_changed()
+        
+        # Actualizar las aplicaciones disponibles
+        gui.update_applications(gui)
+
+    # Ahora crear los radiobuttons con una función lambda que funcione correctamente
+    # La clave es no capturar la variable key en el bucle usando un parámetro por defecto
     for i, (key, value) in enumerate(gui.computer_usages.items()):
         col = i % 4
         row = i // 4 + 1
-        ttk.Radiobutton(usage_frame, text=value, variable=gui.usage_var, value=key, 
-                        command=lambda: gui.on_usage_changed() if hasattr(gui, 'on_usage_changed') else None).grid(row=row, column=col, sticky="w", padx=10, pady=2)
-    
-    # Rango de precio
+        ttk.Radiobutton(usage_frame, text=value, variable=gui.usage_var, value=key,
+                        command=lambda: update_usage_selection(gui)).grid(row=row, column=col, sticky="w", padx=10, pady=2)
+        # Añadir un evento para actualizar las aplicaciones disponibles
+       
+        # Rango de precio
     ttk.Label(requirements_frame, text="Price Range:").grid(row=3, column=0, sticky="w", padx=10, pady=5)
     price_frame = ttk.Frame(requirements_frame)
     price_frame.grid(row=3, column=1, columnspan=3, sticky="w", padx=10, pady=5)
@@ -61,6 +106,18 @@ def setup_generator_tab(gui):
     gui.price_range_slider.grid(row=3, column=4, columnspan=4, sticky="ew", padx=10, pady=5)
     gui.price_range_slider.set(15000)  # Valor por defecto
     
+    # Aplicación objetivo
+    ttk.Label(usage_frame, text="Aplicación específica:").grid(row=2, column=0, sticky="w", padx=10, pady=5)
+    gui.application_var = tk.StringVar(value="Ninguna")
+    gui.application_dropdown = ttk.Combobox(usage_frame, textvariable=gui.application_var, 
+                                        values=["Ninguna"], width=20, state="readonly")
+    gui.application_dropdown.grid(row=2, column=1, columnspan=3, sticky="w", padx=10, pady=5)
+
+    # Añadir un infobox que muestre los requisitos recomendados
+    gui.app_info_button = ctk.CTkButton(usage_frame, text="Ver Requisitos", 
+                                    command=lambda: show_application_requirements(gui),
+                                    width=20)
+    gui.app_info_button.grid(row=2, column=4, padx=5, pady=5)
     # Selección de prioridad
     ttk.Label(requirements_frame, text="Priority:").grid(row=4, column=0, sticky="w", padx=10, pady=5)
     gui.priority_var = tk.StringVar(value="balanced")
@@ -255,3 +312,178 @@ def setup_generator_tab(gui):
     gui.results_preview_text.grid(row=1, column=0, sticky="nsew", padx=10, pady=5)
     gui.results_preview_text.insert(tk.END, "Generate a computer to see results here...")
     gui.results_preview_text.config(state=tk.DISABLED)
+
+    # Añadir estas funciones a gui/tabs/generator_tab.py
+
+def update_applications(gui):
+    """Actualiza las aplicaciones disponibles según el uso seleccionado"""
+    usage = gui.usage_var.get()
+    
+    # Añadir mensaje de depuración
+    print(f"Actualizando aplicaciones para uso: {usage}")
+    
+    # Mapear el valor de la interfaz a la categoría en application_data
+    usage_mapping = {
+        'gaming': 'juegos',
+        'office': 'ofimática',
+        'graphics': 'diseño gráfico',
+        'video': 'edición de video',
+        'web': 'navegación web',
+        'education': 'educación',
+        'architecture': 'arquitectura'
+    }
+    
+    category = usage_mapping.get(usage, '')
+    print(f"Categoría mapeada: {category}")
+    
+    # Importar directamente aquí para evitar problemas circulares
+    from application_data import get_applications_for_category
+    
+    # Obtener aplicaciones para esta categoría
+    applications = get_applications_for_category(category)
+    print(f"Aplicaciones encontradas: {applications}")
+    
+    # Actualizar el dropdown
+    app_values = ["Ninguna"] + [app["name"] for app in applications]
+    gui.application_dropdown.configure(values=app_values)
+    gui.application_var.set("Ninguna")
+    
+    # Guardar el mapping de nombres a IDs para recuperar los requisitos más tarde
+    gui.app_name_to_id = {"Ninguna": None}
+    gui.app_name_to_id.update({app["name"]: app["id"] for app in applications})
+    
+    print(f"Valores del dropdown configurados a: {app_values}")
+
+def show_application_requirements(gui):
+    """Muestra los requisitos de la aplicación seleccionada"""
+    from application_data import get_application_requirements
+    
+    app_name = gui.application_var.get()
+    
+    if app_name == "Ninguna" or not hasattr(gui, 'app_name_to_id'):
+        messagebox.showinfo("Sin Aplicación", "Selecciona una aplicación para ver sus requisitos.")
+        return
+    
+    app_id = gui.app_name_to_id.get(app_name)
+    if not app_id:
+        return
+    
+    # Obtener la categoría de uso
+    usage = gui.usage_var.get()
+    usage_mapping = {
+        'gaming': 'juegos',
+        'office': 'ofimática',
+        'graphics': 'diseño gráfico',
+        'video': 'edición de video',
+        'web': 'navegación web',
+        'education': 'educación',
+        'architecture': 'arquitectura'
+    }
+    category = usage_mapping.get(usage, '')
+    
+    # Obtener los requisitos
+    app_data = get_application_requirements(category, app_id)
+    
+    if not app_data or 'requirements' not in app_data:
+        messagebox.showinfo("Sin Requisitos", "No hay información de requisitos disponible para esta aplicación.")
+        return
+    
+    # Crear un diálogo para mostrar los requisitos
+    req_dialog = ctk.CTkToplevel(gui.master)
+    req_dialog.title(f"Requisitos para {app_name}")
+    req_dialog.geometry("600x400")
+    req_dialog.transient(gui.master)
+    req_dialog.grab_set()
+    
+    # Crear un widget de texto para mostrar los requisitos
+    req_text = tk.scrolledtext.ScrolledText(req_dialog, wrap=tk.WORD, width=70, height=20)
+    req_text.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+    
+    # Formatear los requisitos
+    req_text.insert(tk.END, f"Requisitos Recomendados para {app_name}\n\n", "heading")
+    
+    if 'requirements' in app_data:
+        requirements = app_data['requirements']
+        
+        # CPU
+        if 'cpu' in requirements:
+            cpu_reqs = requirements['cpu']
+            req_text.insert(tk.END, "CPU:\n", "subheading")
+            
+            if 'performance_min' in cpu_reqs:
+                req_text.insert(tk.END, f"- Rendimiento mínimo: {cpu_reqs['performance_min']}/100\n")
+            
+            if 'cores_min' in cpu_reqs:
+                req_text.insert(tk.END, f"- Mínimo {cpu_reqs['cores_min']} núcleos\n")
+                
+            if 'recommended_models' in cpu_reqs and cpu_reqs['recommended_models']:
+                req_text.insert(tk.END, f"- Modelos recomendados: {', '.join(cpu_reqs['recommended_models'])}\n")
+                
+            req_text.insert(tk.END, "\n")
+            
+        # GPU
+        if 'gpu' in requirements:
+            gpu_reqs = requirements['gpu']
+            req_text.insert(tk.END, "GPU:\n", "subheading")
+            
+            if 'power_min' in gpu_reqs:
+                req_text.insert(tk.END, f"- Potencia mínima: {gpu_reqs['power_min']}/100\n")
+            
+            if 'vram_min' in gpu_reqs:
+                req_text.insert(tk.END, f"- VRAM mínima: {gpu_reqs['vram_min']} GB\n")
+                
+            if 'recommended_models' in gpu_reqs and gpu_reqs['recommended_models']:
+                req_text.insert(tk.END, f"- Modelos recomendados: {', '.join(gpu_reqs['recommended_models'])}\n")
+                
+            req_text.insert(tk.END, "\n")
+            
+        # RAM
+        if 'ram' in requirements:
+            ram_reqs = requirements['ram']
+            req_text.insert(tk.END, "RAM:\n", "subheading")
+            
+            if 'capacity_min' in ram_reqs:
+                req_text.insert(tk.END, f"- Capacidad mínima: {ram_reqs['capacity_min']} GB\n")
+                
+            if 'frequency_min' in ram_reqs:
+                req_text.insert(tk.END, f"- Frecuencia mínima: {ram_reqs['frequency_min']} MHz\n")
+                
+            req_text.insert(tk.END, "\n")
+            
+        # Storage
+        if 'storage' in requirements:
+            storage_reqs = requirements['storage']
+            req_text.insert(tk.END, "Almacenamiento:\n", "subheading")
+            
+            if 'capacity_min' in storage_reqs:
+                req_text.insert(tk.END, f"- Capacidad mínima: {storage_reqs['capacity_min']} GB\n")
+                
+            if 'type' in storage_reqs:
+                req_text.insert(tk.END, f"- Tipo recomendado: {storage_reqs['type']}\n")
+                
+            req_text.insert(tk.END, "\n")
+            
+    # Performance targets
+    if 'performance_targets' in app_data:
+        targets = app_data['performance_targets']
+        req_text.insert(tk.END, "Objetivos de Rendimiento:\n", "subheading")
+        
+        if 'resolution' in targets:
+            req_text.insert(tk.END, f"- Resolución objetivo: {targets['resolution']}\n")
+            
+        if 'fps_target' in targets:
+            req_text.insert(tk.END, f"- FPS objetivo: {targets['fps_target']}\n")
+            
+        if 'quality_preset' in targets:
+            req_text.insert(tk.END, f"- Calidad gráfica: {targets['quality_preset']}\n")
+    
+    # Darle formato al texto
+    req_text.tag_configure("heading", font=("TkDefaultFont", 14, "bold"))
+    req_text.tag_configure("subheading", font=("TkDefaultFont", 12, "bold"))
+    
+    # Hacer el texto de solo lectura
+    req_text.config(state=tk.DISABLED)
+    
+    # Botón de cerrar
+    close_button = ctk.CTkButton(req_dialog, text="Cerrar", command=req_dialog.destroy)
+    close_button.pack(pady=10)

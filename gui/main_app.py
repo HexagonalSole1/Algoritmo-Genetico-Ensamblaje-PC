@@ -236,6 +236,7 @@ class ComputerGeneratorGUI:
         
         # Actualizar estado
         self.status_bar.config(text="Formulario restablecido a valores predeterminados")
+# Actualizar el método generate_computers en gui/main_app.py
 
     def generate_computers(self):
         """Inicia el proceso de generación de configuraciones de computadora"""
@@ -261,6 +262,13 @@ class ComputerGeneratorGUI:
             
             usage = usage_mapping.get(self.usage_var.get(), 'juegos')
             
+            # Obtener la aplicación objetivo seleccionada
+            application_name = self.application_var.get()
+            target_application = None
+            
+            if hasattr(self, 'app_name_to_id') and application_name in self.app_name_to_id:
+                target_application = self.app_name_to_id[application_name]
+            
             # Crear preferencias de usuario
             user_prefs = UserPreferences(
                 min_price=min_price,
@@ -272,7 +280,9 @@ class ComputerGeneratorGUI:
                 aesthetic={"rgb": self.rgb_lighting_var.get(), "color": self.case_color_var.get()},
                 must_include=self.must_include,
                 must_exclude=self.must_exclude,
-                future_proof=self.future_proof_var.get()
+                future_proof=self.future_proof_var.get(),
+                target_application=target_application,
+                application_category=usage
             )
             
             # Actualizar estado de la UI
@@ -310,7 +320,7 @@ class ComputerGeneratorGUI:
         except ValueError as e:
             messagebox.showerror("Error de entrada", f"Entrada inválida: {str(e)}")
             self.status_bar.config(text="Error en la generación")
-
+            
     def run_generation(self):
         """Ejecuta el algoritmo genético en un hilo separado"""
         try:
