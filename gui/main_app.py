@@ -54,7 +54,8 @@ class ComputerGeneratorGUI:
         self.fitness_weights = {
             'price_range': 20,
             'compatibility': 25,
-            'usage_match': 30,
+            'usage_match': 20,          # Disminuye este valor
+            'application_match': 15,    # Añade peso para aplicación específica
             'power_balance': 5,
             'bottleneck': 10,
             'value_cpu': 5,
@@ -387,13 +388,13 @@ class ComputerGeneratorGUI:
         
         # Cambiar a la pestaña de resultados
         self.notebook.select(1)  # Índice de la pestaña Resultados
-
     def update_results_text(self):
-        """Actualiza el texto de resultados con los detalles de la computadora"""
-        if not hasattr(self, 'current_computer') or not hasattr(self, 'results_text'):
+        """Actualiza el texto de resultados con los detalles de la computadora y compatibilidad de aplicación"""
+        # Verificar que exista results_text
+        if not hasattr(self, 'results_text'):
             return
-        
-        # Habilitar edición
+
+        # Habilitar edición del texto
         self.results_text.config(state=tk.NORMAL)
         
         # Limpiar texto existente
@@ -402,12 +403,56 @@ class ComputerGeneratorGUI:
         # Agregar detalles de la computadora
         self.results_text.insert(tk.END, str(self.current_computer))
         
-        # Agregar estadísticas adicionales
-        self.results_text.insert(tk.END, "\n\nEstadísticas de generación:\n")
-        self.results_text.insert(tk.END, f"Tiempo de ejecución: {self.stats['execution_time']:.2f} segundos\n")
-        self.results_text.insert(tk.END, f"Generaciones completadas: {self.stats['generations_completed']}\n")
-        self.results_text.insert(tk.END, f"Tamaño final de población: {self.stats['final_population_size']}\n")
-        self.results_text.insert(tk.END, f"Diversidad final: {self.stats['final_diversity']:.2f}\n")
+        # Verificar compatibilidad con aplicación
+        try:
+            # Verificar que existan los atributos necesarios
+            if (hasattr(self, 'current_computer') and 
+                hasattr(self, 'application_var') and 
+                hasattr(self, 'usage_var') and 
+                hasattr(self, 'app_name_to_id')):
+                
+                app_name = self.application_var.get()
+                
+                # Solo proceder si se seleccionó una aplicación
+                if app_name and app_name != "Ninguna":
+                    from algorithm.utils.application_requirements_validator import validate_application_requirements, display_validation_results
+                    from application_data import get_application_requirements
+                    
+                    # Mapeo de uso a categoría
+                    usage_mapping = {
+                        'gaming': 'juegos',
+                        'office': 'ofimática',
+                        'graphics': 'diseño gráfico',
+                        'video': 'edición de video',
+                        'web': 'navegación web',
+                        'education': 'educación',
+                        'architecture': 'arquitectura'
+                    }
+                    
+                    usage = self.usage_var.get()
+                    category = usage_mapping.get(usage, '')
+                    
+                    # Obtener ID de aplicación
+                    app_id = self.app_name_to_id.get(app_name)
+                    
+                    # Obtener requisitos de la aplicación
+                    app_data = get_application_requirements(category, app_id)
+                    
+                    if app_data and 'requirements' in app_data:
+                        # Validar compatibilidad
+                        validation_results = validate_application_requirements(
+                            self.current_computer, 
+                            app_data['requirements']
+                        )
+                        
+                        # Agregar resultado de compatibilidad
+                        self.results_text.insert(tk.END, "\n\nCompatibilidad con Aplicación:\n")
+                        compatibility_message = display_validation_results(validation_results)
+                        self.results_text.insert(tk.END, compatibility_message)
+        
+        except Exception as e:
+            # Manejo de errores
+            self.results_text.insert(tk.END, f"\n\nError al verificar compatibilidad: {str(e)}")
         
         # Deshabilitar edición
         self.results_text.config(state=tk.DISABLED)

@@ -7,7 +7,7 @@ from tkinter import messagebox
 # Si también estás teniendo problemas con scrolledtext, añade:
 from tkinter import scrolledtext
 from application_data import get_applications_for_category
-
+from algorithm.utils.application_requirements_validator import validate_application_requirements, display_validation_results
 # Añadir este código de prueba al inicio de gui/tabs/generator_tab.py
 # después de las importaciones para verificar que el archivo puede importarse
 
@@ -358,7 +358,80 @@ def update_applications(gui):
     print(f"Valores del dropdown configurados a: {app_values}")
 
 def show_application_requirements(gui):
-    """Muestra los requisitos de la aplicación seleccionada"""
+    """Muestra los requisitos de la aplicación seleccionada y valida la compatibilidad"""
+    from application_data import get_application_requirements
+    from algorithm.utils.application_requirements_validator import validate_application_requirements, display_validation_results
+    
+    app_name = gui.application_var.get()
+    
+    if app_name == "Ninguna" or not hasattr(gui, 'app_name_to_id'):
+        messagebox.showinfo("Sin Aplicación", "Selecciona una aplicación para ver sus requisitos.")
+        return
+    
+    app_id = gui.app_name_to_id.get(app_name)
+    if not app_id:
+        return
+    
+    # Obtener la categoría de uso
+    usage = gui.usage_var.get()
+    usage_mapping = {
+        'gaming': 'juegos',
+        'office': 'ofimática',
+        'graphics': 'diseño gráfico',
+        'video': 'edición de video',
+        'web': 'navegación web',
+        'education': 'educación',
+        'architecture': 'arquitectura'
+    }
+    category = usage_mapping.get(usage, '')
+    
+    # Obtener los requisitos
+    app_data = get_application_requirements(category, app_id)
+    
+    if not app_data or 'requirements' not in app_data:
+        messagebox.showinfo("Sin Requisitos", "No hay información de requisitos disponible para esta aplicación.")
+        return
+    
+    # Si no hay una computadora generada, mostrar solo los requisitos
+    if not hasattr(gui, 'current_computer'):
+        # (Código anterior para mostrar requisitos)
+        return
+    
+    # Validar la computadora actual contra los requisitos
+    validation_results = validate_application_requirements(
+        gui.current_computer, 
+        app_data['requirements']
+    )
+    
+    # Crear un diálogo para mostrar los requisitos y validación
+    req_dialog = ctk.CTkToplevel(gui.master)
+    req_dialog.title(f"Requisitos para {app_name}")
+    req_dialog.geometry("600x500")
+    req_dialog.transient(gui.master)
+    req_dialog.grab_set()
+    
+    # Crear un widget de texto para mostrar los requisitos
+    req_text = scrolledtext.ScrolledText(req_dialog, wrap=tk.WORD, width=70, height=20)
+    req_text.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+    
+    # Mostrar los requisitos originales (como antes)
+    # ... (código anterior para mostrar requisitos detallados)
+    
+    # Agregar los resultados de la validación
+    req_text.insert(tk.END, "\n\nValidación de Configuración:\n", "subheading")
+    validation_message = display_validation_results(validation_results)
+    req_text.insert(tk.END, validation_message)
+    
+    # Formatear el texto
+    req_text.tag_configure("heading", font=("TkDefaultFont", 14, "bold"))
+    req_text.tag_configure("subheading", font=("TkDefaultFont", 12, "bold"))
+    
+    # Hacer el texto de solo lectura
+    req_text.config(state=tk.DISABLED)
+    
+    # Botón de cerrar
+    close_button = ctk.CTkButton(req_dialog, text="Cerrar", command=req_dialog.destroy)
+    close_button.pack(pady=10)
     from application_data import get_application_requirements
     
     app_name = gui.application_var.get()

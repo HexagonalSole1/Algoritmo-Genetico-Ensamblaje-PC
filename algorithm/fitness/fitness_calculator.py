@@ -29,7 +29,8 @@ class FitnessCalculator:
         self.fitness_weights = {
             'price_range': 20,
             'compatibility': 25,
-            'usage_match': 30,
+            'usage_match': 20,  # Reducido de 30 para dar espacio a application_match
+            'application_match': 15,  # Nuevo peso para compatibilidad con aplicación específica
             'power_balance': 5,
             'bottleneck': 10,
             'value_cpu': 5,
@@ -67,6 +68,10 @@ class FitnessCalculator:
         usage_score = self.get_usage_score(computer)
         fitness_score += self.fitness_weights['usage_match'] * usage_score
         
+        # Score for matching the specific application requirements
+        application_score = self.calculate_application_match(computer)
+        fitness_score += self.fitness_weights['application_match'] * application_score
+        
         # Power balance - PSU should be adequate but not overpowered
         power_balance_score = self.calculate_power_balance(computer)
         fitness_score += self.fitness_weights['power_balance'] * power_balance_score
@@ -92,6 +97,108 @@ class FitnessCalculator:
         fitness_score += 5 * case_score
 
         return fitness_score
+
+    def calculate_application_match(self, computer: Computer) -> float:
+        """
+        Calculate how well the computer meets the requirements of the target application
+        
+        Returns:
+            float: Score between 0 and 1
+        """
+        # Si no hay aplicación objetivo, retorna un valor neutro
+        if not self.user_preferences.target_application or not self.user_preferences.application_category:
+            return 0.5
+        
+        # Importar aquí para evitar dependencias circulares
+        from application_data import get_application_requirements
+        
+        # Obtener los requisitos de la aplicación
+        app_data = get_application_requirements(
+            self.user_preferences.application_category,
+            self.user_preferences.target_application
+        )
+        
+        if not app_data or 'requirements' not in app_data:
+            return 0.5
+        
+        # Inicializar contador de requisitos y requisitos cumplidos
+        requirements_count = 0
+        requirements_met = 0
+        requirements = app_data['requirements']
+        
+        # Verificar CPU
+        if 'cpu' in requirements:
+            cpu_reqs = requirements['cpu']
+            
+            # Rendimiento mínimo
+            if 'performance_min' in cpu_reqs:
+                requirements_count += 1
+                if computer.cpu.performance >= cpu_reqs['performance_min']:
+                    requirements_met += 1
+            
+            # Núcleos mínimos
+            if 'cores_min' in cpu_reqs:
+                requirements_count += 1
+                if hasattr(computer.cpu, 'cores') and computer.cpu.cores >= cpu_reqs['cores_min']:
+                    requirements_met += 1
+        
+        # Verificar GPU
+        if 'gpu' in requirements:
+            gpu_reqs = requirements['gpu']
+            
+            # Potencia mínima
+            if 'power_min' in gpu_reqs:
+                requirements_count += 1
+                if computer.gpu and computer.gpu.power >= gpu_reqs['power_min']:
+                    requirements_met += 1
+                elif not computer.gpu and computer.cpu.has_integrated_graphics and \
+                     computer.cpu.integrated_graphics_power >= gpu_reqs['power_min']:
+                    requirements_met += 1
+            
+            # VRAM mínima
+            if 'vram_min' in gpu_reqs and computer.gpu:
+                requirements_count += 1
+                if hasattr(computer.gpu, 'vram') and computer.gpu.vram >= gpu_reqs['vram_min']:
+                    requirements_met += 1
+        
+        # Verificar RAM
+        if 'ram' in requirements:
+            ram_reqs = requirements['ram']
+            
+            # Capacidad mínima
+            if 'capacity_min' in ram_reqs:
+                requirements_count += 1
+                if computer.ram.capacity >= ram_reqs['capacity_min']:
+                    requirements_met += 1
+            
+            # Frecuencia mínima
+            if 'frequency_min' in ram_reqs:
+                requirements_count += 1
+                if computer.ram.frequency >= ram_reqs['frequency_min']:
+                    requirements_met += 1
+        
+        # Verificar Storage
+        if 'storage' in requirements:
+            storage_reqs = requirements['storage']
+            
+            # Capacidad mínima
+            if 'capacity_min' in storage_reqs:
+                requirements_count += 1
+                if computer.storage.capacity >= storage_reqs['capacity_min']:
+                    requirements_met += 1
+            
+            # Tipo de almacenamiento (SSD vs HDD)
+            if 'type' in storage_reqs:
+                requirements_count += 1
+                if computer.storage.type == storage_reqs['type']:
+                    requirements_met += 1
+        
+        # Calcular puntuación basada en la proporción de requisitos cumplidos
+        # Añadir base de 0.3 para que incluso si no se cumplen requisitos no sea una puntuación de 0
+        if requirements_count == 0:
+            return 0.5  # No hay requisitos definidos, valor neutro
+        
+        return 0.3 + (0.7 * requirements_met / requirements_count)
 
     def calculate_price_range_score(self, computer: Computer) -> float:
         """Calculate how well the computer fits in the desired price range"""

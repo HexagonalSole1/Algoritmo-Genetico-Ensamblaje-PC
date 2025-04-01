@@ -101,3 +101,41 @@ def setup_results_tab(gui):
         score_label = ttk.Label(performance_frame, text="0/100")
         score_label.grid(row=2, column=i, padx=5, pady=5)
         gui.performance_vars[f"{metric.lower()}_label"] = score_label
+def update_results_text(self):
+    # Después de mostrar los detalles de la computadora
+    
+    # Verificar compatibilidad con aplicación
+    if hasattr(self, 'current_computer') and hasattr(self, 'application_var'):
+        app_name = self.application_var.get()
+        
+        if app_name and app_name != "Ninguna":
+            from algorithm.utils.application_requirements_validator import validate_application_requirements, display_validation_results
+            from application_data import get_application_requirements
+            
+            # Obtener categoría
+            usage_mapping = {
+                'gaming': 'juegos',
+                'office': 'ofimática',
+                'graphics': 'diseño gráfico',
+                'video': 'edición de video',
+                'web': 'navegación web',
+                'education': 'educación',
+                'architecture': 'arquitectura'
+            }
+            usage = self.usage_var.get()
+            category = usage_mapping.get(usage, '')
+            
+            # Obtener requisitos de la aplicación
+            app_id = self.app_name_to_id.get(app_name)
+            app_data = get_application_requirements(category, app_id)
+            
+            if app_data and 'requirements' in app_data:
+                validation_results = validate_application_requirements(
+                    self.current_computer, 
+                    app_data['requirements']
+                )
+                
+                # Agregar resultado de compatibilidad al texto de resultados
+                self.results_text.insert(tk.END, "\n\nCompatibilidad con Aplicación:\n")
+                compatibility_message = display_validation_results(validation_results)
+                self.results_text.insert(tk.END, compatibility_message)
